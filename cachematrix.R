@@ -29,15 +29,15 @@ cacheSolve <- function(x, ...) {
   
   i <- x$GetInverse()
   
-  if(!is.null(i)){
+  if(!is.null(i)){  ## If isn't the first time you calculate the inverse return the value of i
     message("Obtaining data from Cache...")
     return(i)
   }
+  ## If its the first time
+  matriz <- x$Get()  ## obtain the values of th ematrix
   
-  matriz <- x$Get()
-  
-  i <- try(solve(matriz, ...))
-  m$SetInverse(inverse = i)
+  i <- try(solve(matriz, ...)) ## calculate the inverse 
+  x$SetInverse(inverse = i) ## and update the values saved in the matrix x
   
   return(i)
 }
