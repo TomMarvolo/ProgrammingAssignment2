@@ -1,15 +1,43 @@
-## Put comments here that give an overall description of what your
-## functions do
+## This script defines a Matrix which save its own inverse.
 
-## Write a short comment describing this function
+## makeCacheMatrix -> creates a matrix with a Setter/Getter for the values
+## and Setter/Getter for the inverse values.
 
-makeCacheMatrix <- function(x = matrix()) {
-
+makeCacheMatrix <- function(x = matrix()) { # if x is missing create an empty matrix
+  inv <- NULL
+  set <- function(value){
+    x <<- value
+    inv <<- NULL
+  }
+  get <- function() x
+  
+  getInverse <- function() inv
+  setInverse <- function(inverse){
+    inv <<- inverse
+  }
+  
+  list( Set = set, Get= get, SetInverse=setInverse, GetInverse = getInverse)
 }
 
 
-## Write a short comment describing this function
+## cacheSolve -> calculates inverse matrix of x, 
+## arguments:
+## x -> Matrix, create with makeCacheMatrix function.
+## ... -> additional parameters for solve Function.
 
 cacheSolve <- function(x, ...) {
-        ## Return a matrix that is the inverse of 'x'
+  
+  i <- x$GetInverse()
+  
+  if(!is.null(i)){
+    message("Obtaining data from Cache...")
+    return(i)
+  }
+  
+  matriz <- x$Get()
+  
+  i <- try(solve(matriz, ...))
+  m$SetInverse(inverse = i)
+  
+  return(i)
 }
